@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Search Lost Items - Lost & Found</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="search-container">
+    <h2>🔍 Search Lost Items</h2>
+    <form id="searchForm">
+      <input type="text" id="keyword" name="keyword" placeholder="Search by keyword..." />
+      <input type="text" id="location" name="location" placeholder="Location" />
+      <input type="date" id="date" name="date" />
+      <button type="submit">Search</button>
+    </form>
+
+    <div id="results" class="results-list"></div>
+  </div>
+
+  <script src="js/search.js"></script>
+</body>
+</html>
