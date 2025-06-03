@@ -1,21 +1,24 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const username = localStorage.getItem("loggedInUser");
+  const userString = localStorage.getItem("loggedInUser");
 
-  if (!username) {
-    window.location.href = "login.html";
+  if (!userString) {
+    window.location.href = "index.html";
     return;
   }
 
+  const user = JSON.parse(userString); // Parse the JSON string to an object
+
   const greeting = document.getElementById("greeting");
-  if (greeting) {
-    greeting.textContent = `Welcome, ${username}!`;
+  if (greeting && user.username) {
+    greeting.textContent = `Welcome!`;
   }
 
   const logoutBtn = document.getElementById("logoutBtn");
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
       localStorage.removeItem("loggedInUser");
-      window.location.href = "login.html";
+      window.location.href = "index.html";
     });
   }
 });
+

@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   const reportForm = document.getElementById('reportForm');
-  const reportMessage = document.getElementById('reportMessage');
+  const reportMessage = document.getElementById('statusMsg');
 
   // Get the type (lost or found) from query params
   const params = new URLSearchParams(window.location.search);
@@ -20,13 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const loggedInUser = localStorage.getItem('loggedInUser');
     if (!loggedInUser) {
       alert('Please login first.');
-      window.location.href = 'login.html';
+      window.location.href = 'index.html';
       return;
     }
 
     const user = JSON.parse(loggedInUser);
 
-    const item_name = document.getElementById('itemName').value.trim();
+    const item_name = document.getElementById('title').value.trim();
+
     const description = document.getElementById('description').value.trim();
     const date = document.getElementById('date').value;
     const location = document.getElementById('location').value.trim();

@@ -1,4 +1,3 @@
-// routes/items.js
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
@@ -23,26 +22,27 @@ router.post('/report', (req, res) => {
 
 // Search lost items
 router.get('/search', (req, res) => {
-  const { item_name, location } = req.query;
+  const { query, location } = req.query; // frontend sends "query" not "item_name"
 
-  let query = `SELECT * FROM items WHERE type = 'lost'`;
+  let sql = `SELECT * FROM items WHERE type = 'lost'`;
   const params = [];
 
-  if (item_name) {
-    query += ` AND item_name LIKE ?`;
-    params.push(`%${item_name}%`);
+  if (query) {
+    sql += ` AND item_name LIKE ?`;
+    params.push(`%${query}%`);
   }
   if (location) {
-    query += ` AND location LIKE ?`;
+    sql += ` AND location LIKE ?`;
     params.push(`%${location}%`);
   }
 
-  db.query(query, params, (err, results) => {
+  db.query(sql, params, (err, results) => {
     if (err) {
       console.error('DB error:', err);
       return res.status(500).json({ message: 'Database error' });
     }
-    res.json(results);
+    // Send response in expected format
+    res.json({ items: results });
   });
 });
 

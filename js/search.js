@@ -1,18 +1,21 @@
-// js/search.js
 
+console.log("Search script loaded");
 document.addEventListener('DOMContentLoaded', () => {
   const searchForm = document.getElementById('searchForm');
-  const searchResults = document.getElementById('searchResults');
+  const searchResults = document.getElementById('results');
   const searchMessage = document.getElementById('searchMessage');
+  
 
   searchForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+    e.preventDefault();  
 
-    const query = document.getElementById('searchQuery').value.trim();
+    const query = document.getElementById('keyword').value.trim(); // <-- Fixed here
 
     if (!query) {
-      searchMessage.textContent = 'Please enter an item name to search.';
-      searchMessage.style.color = 'red';
+      if (searchMessage) {
+        searchMessage.textContent = 'Please enter an item name to search.';
+        searchMessage.style.color = 'red';
+      }
       return;
     }
 
@@ -23,10 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (response.ok) {
         if (data.items.length === 0) {
           searchResults.innerHTML = '<p>No lost items found matching your search.</p>';
-          searchMessage.textContent = '';
+          if (searchMessage) searchMessage.textContent = '';
         } else {
-          searchMessage.textContent = '';
-          // Build results HTML
+          if (searchMessage) searchMessage.textContent = '';
           let html = '<ul class="item-list">';
           data.items.forEach(item => {
             html += `
@@ -41,12 +43,16 @@ document.addEventListener('DOMContentLoaded', () => {
           searchResults.innerHTML = html;
         }
       } else {
-        searchMessage.textContent = data.message || 'Search failed.';
-        searchMessage.style.color = 'red';
+        if (searchMessage) {
+          searchMessage.textContent = data.message || 'Search failed.';
+          searchMessage.style.color = 'red';
+        }
       }
     } catch (error) {
-      searchMessage.textContent = 'Error connecting to server.';
-      searchMessage.style.color = 'red';
+      if (searchMessage) {
+        searchMessage.textContent = 'Error connecting to server.';
+        searchMessage.style.color = 'red';
+      }
       console.error('Search error:', error);
     }
   });
